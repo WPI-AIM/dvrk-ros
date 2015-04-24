@@ -7,7 +7,10 @@
          command="rosrun xacro xacro.py $(arg model)"/>
   <param name="use_gui" value="$(arg gui)"/>
   <param name="rate" value="$(arg rate)"/>
-
+  <rosparam>
+      <!-- if connect to dv hardware, update this source list  -->
+      source_list: [/dvrk_psm/joint_states_command]
+    </rosparam>
   <!-- joint state publisher -->
   <node name="joint_state_publisher"
         pkg="joint_state_publisher"

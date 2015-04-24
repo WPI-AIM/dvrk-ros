@@ -1,4 +1,4 @@
-<!-- Test Teleo Launch File -->
+<!-- Launch Half TeleOp for Motion Planning: By Adnan Munawar -->
 <launch>
 
   <!-- dvrk_teleop gui node -->
@@ -12,18 +12,21 @@
         type="dvrk_teleop_gui"/>
   
   <!-- mtm kinematics node -->
-  <node name="mtm_kinematics"
+  <!--node name="mtm_kinematics"
         pkg="dvrk_kinematics"
-        type="dvrk_mtm_logic"/>
+        type="dvrk_mtm_logic"/-->
 
   <!-- psm kinematics node -->
   <node name="psm_kinematics"
         pkg="dvrk_kinematics"
         type="dvrk_psm_logic"/>
+
+  <node name="psm_mp"
+        pkg="kinematics"
+        type="psmMP_node"/>
   
   <!-- mtm rviz  -->
   <include file="$(find dvrk_model)/launch/mtm_psm_rviz.launch"/>
-
+  <include file="$(find psm1_rviz)/launch/demo.launch"/>
 </launch>
-
 

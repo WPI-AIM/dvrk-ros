@@ -6,17 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
-        - /TF1/Frames1
-        - /TF1/Tree1
-        - /TF1/Tree1/world1
-        - /TF1/Tree1/world1/one_remote_center_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1/one_outer_yaw_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1/one_outer_yaw_link1/one_outer_pitch_back_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1/one_outer_yaw_link1/one_outer_pitch_back_link1/one_outer_pitch_bottom_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1/one_outer_yaw_link1/one_outer_pitch_back_link1/one_outer_pitch_bottom_link1/one_outer_insertion_link1
-        - /TF1/Tree1/world1/one_remote_center_link1/one_psm_base_link1/one_outer_yaw_link1/one_outer_pitch_back_link1/one_outer_pitch_bottom_link1/one_outer_insertion_link1/one_tool_main_link1
         - /RobotModel1
       Splitter Ratio: 0.775463
     Tree Height: 501
@@ -53,86 +42,99 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Class: rviz/TF
-      Enabled: true
-      Frame Timeout: 15
-      Frames:
-        All Enabled: false
-        one_outer_insertion_link:
-          Value: true
-        one_outer_pitch_back_link:
-          Value: true
-        one_outer_pitch_bottom_link:
-          Value: true
-        one_outer_pitch_front_link:
-          Value: false
-        one_outer_pitch_top_link:
-          Value: false
-        one_outer_yaw_link:
-          Value: true
-        one_psm_base_link:
-          Value: true
-        one_remote_center_link:
-          Value: true
-        one_tool_main_link:
-          Value: true
-        one_tool_wrist_link:
-          Value: false
-        one_tool_wrist_sca_ee_link_1:
-          Value: false
-        one_tool_wrist_sca_ee_link_2:
-          Value: false
-        one_tool_wrist_sca_link:
-          Value: false
-        one_tool_wrist_sca_shaft_link:
-          Value: false
-        one_tool_wrist_shaft_link:
-          Value: false
-        world:
-          Value: true
-      Marker Scale: 0.3
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: true
-      Tree:
-        world:
-          one_remote_center_link:
-            one_psm_base_link:
-              one_outer_yaw_link:
-                one_outer_pitch_back_link:
-                  one_outer_pitch_bottom_link:
-                    one_outer_insertion_link:
-                      one_tool_main_link:
-                        one_tool_wrist_link:
-                          one_tool_wrist_shaft_link:
-                            one_tool_wrist_sca_link:
-                              one_tool_wrist_sca_shaft_link:
-                                one_tool_wrist_sca_ee_link_1:
-                                  {}
-                                one_tool_wrist_sca_ee_link_2:
-                                  {}
-                  one_outer_pitch_top_link:
-                    {}
-                one_outer_pitch_front_link:
-                  {}
-      Update Interval: 0
-      Value: true
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: false
+      Enabled: true
       Links:
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        one_outer_insertion_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_outer_pitch_back_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_outer_pitch_bottom_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_outer_pitch_front_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_outer_pitch_top_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_outer_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_psm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_remote_center_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        one_tool_main_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_sca_ee_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_sca_ee_link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_sca_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_sca_shaft_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        one_tool_wrist_shaft_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: false
+      Value: true
       Visual Enabled: true
   Enabled: true
   Global Options:
@@ -158,22 +160,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.904836
+      Distance: 1.68531
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.196407
-        Y: 0.530652
-        Z: 0.551518
+        X: -0.135774
+        Y: 0.530528
+        Z: 0.585633
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.114797
+      Pitch: 0.229797
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.64543
+      Yaw: 5.05044
     Saved: ~
 Window Geometry:
   Displays:
@@ -189,5 +191,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1580
-  X: 321
+  X: 314
   Y: 156

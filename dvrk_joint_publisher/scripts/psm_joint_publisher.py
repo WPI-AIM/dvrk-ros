@@ -11,7 +11,7 @@ def jnt_pos_cb(msg):
         pass
     else:
         jnt_msg.position = []
-        for i in range(0,len(msg.position)-1):
+        for i in range(0,7):
 		if i == 2:
 			val = ((msg.position[i] + 22)*0.242)/244
 	    		jnt_msg.position.append(val)
@@ -24,7 +24,7 @@ def jnt_vel_cb(msg):
         pass
     else:
         jnt_msg.velocity = []
-        for i in range(0,len(msg.velocity)-1):
+        for i in range(0,7):
             jnt_msg.velocity.append(msg.velocity[i])
         pass
 

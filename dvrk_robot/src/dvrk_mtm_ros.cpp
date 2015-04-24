@@ -122,7 +122,7 @@ int main(int argc, char** argv)
   // ------------------------------------------------------
 
   // ros wrapper
-  mtsROSBridge robotBridge("RobotBridge", 20 * cmn_ms, true);
+  mtsROSBridge robotBridge("RobotBridge", 2 * cmn_ms, true);
 
   // connect to mtm
   robotBridge.AddPublisherFromReadCommand<prmPositionJointGet, sensor_msgs::JointState>(

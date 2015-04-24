@@ -75,7 +75,7 @@ void mtsTeleop::Run(void)
         psm_pose_cmd_.Assign(psm_pose_cur_);
 
         // translation
-        double scale = 0.2;
+        double scale = 0.4;
         vct3 mtm_tra = mtm_pose_cur_.Translation() - mtm_pose_pre_.Translation();
         vct3 psm_tra = scale * mtm_tra;
 

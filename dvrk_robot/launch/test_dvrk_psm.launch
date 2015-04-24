@@ -25,16 +25,22 @@
     <remap from="/joint_states" to="/joint_states/joint_position_current" />
     <node name="joint_state_publisher"
           pkg="joint_state_publisher"
-          type="joint_state_publisher" />
+          type="joint_state_publisher" >
+          <rosparam param="source_list">[/ros_matlab_psm1]</rosparam>
+    </node>
 
     <!-- robot state publisher -->
     <node name="robot_state_publisher"
         pkg="robot_state_publisher"
         type="state_publisher" />
 
-    <node name="actual_psm_jp" 
+    <node name="feedback_psm_jp" 
           pkg="dvrk_joint_publisher"
-          type="actual_psm_control.py"/>
+          type="psm_joint_publisher.py"/>
+
+    <!--node name="actual_psm_jp" 
+          pkg="dvrk_joint_publisher"
+          type="actual_psm_control.py"/-->
 
     <node name="rviz" 
 	  pkg="rviz" 

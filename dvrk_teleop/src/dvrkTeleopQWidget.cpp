@@ -19,6 +19,8 @@ dvrkTeleopQWidget::dvrkTeleopQWidget(const std::string &name, const double &peri
                                     &dvrkTeleopQWidget::master_pose_cb, this);
     sub_psm_pose_ = nh_.subscribe("/dvrk_psm/cartesian_pose_current", 1,
                                    &dvrkTeleopQWidget::slave_pose_cb, this);
+    sub_mtm_clutch = nh_.subscribe("/dvrk_footpedal/clutch_state",1,
+                                   &dvrkTeleopQWidget::clutch_state_cb, this);
 
     // publisher
     pub_teleop_enable_ = nh_.advertise<std_msgs::Bool>("/dvrk_teleop/enable", 100);
@@ -188,6 +190,11 @@ void dvrkTeleopQWidget::master_pose_cb(const geometry_msgs::PoseConstPtr &msg)
 void dvrkTeleopQWidget::slave_pose_cb(const geometry_msgs::PoseConstPtr &msg)
 {
     mtsROSToCISST((*msg), psm_pose_cur_);
+}
+
+void dvrkTeleopQWidget::clutch_state_cb(const std_msgs::BoolConstPtr &msg)
+{
+    is_clutched_ = msg->data;
 }
 
 

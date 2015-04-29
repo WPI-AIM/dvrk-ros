@@ -139,6 +139,10 @@ int main(int argc, char** argv)
               "Clutch","Button","/dvrk_footpedal/clutch_state");
   robotBridge.AddPublisherFromEventWrite<prmEventButton, std_msgs::Bool>(
               "Coag","Button","/dvrk_footpedal/coag_state");
+  robotBridge.AddPublisherFromEventWrite<prmEventButton, std_msgs::Bool>(
+              "Camera","Button","/dvrk_footpedal/camera_state");
+  robotBridge.AddPublisherFromEventWrite<prmEventButton, std_msgs::Bool>(
+              "Cam-","Button","/dvrk_footpedal/cam_minus_state");
   robotBridge.AddPublisherFromEventVoid(
               config_name,"GripperPinchEvent","/dvrk_mtm/gripper_pinch_event");
 
@@ -164,6 +168,8 @@ int main(int argc, char** argv)
   componentManager->Connect(robotBridge.GetName(), pid->GetName(), pid->GetName(), "Controller");
   componentManager->Connect(robotBridge.GetName(),"Clutch","io","CLUTCH");
   componentManager->Connect(robotBridge.GetName(),"Coag","io","COAG");
+  componentManager->Connect(robotBridge.GetName(), "Camera","io","CAMERA");
+  componentManager->Connect(robotBridge.GetName(), "Cam-","io","CAM-");
 
   //-------------------------------------------------------
   // End ROS Bridge

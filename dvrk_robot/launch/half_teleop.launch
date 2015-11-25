@@ -5,7 +5,7 @@
     <node name="dvrk_half_ros_node"
         pkg="dvrk_robot"
         type="dvrk_half_ros"
-        args="-i $(find dvrk_robot)/config/sawRobotIO1394-MTMR-28247.xml
+        args="-i $(find dvrk_robot)/config/sawRobotIO1394-MTMR-28247-foot-pedal.xml
               -p $(find dvrk_robot)/config/sawControllersPID-MTM.xml
               -k $(find dvrk_robot)/config/dvmtm.rob
               -n MTMR

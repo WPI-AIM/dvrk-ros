@@ -27,7 +27,8 @@ http://www.cisst.org/cisst/license.txt.
 #include <sawControllers/mtsPIDQtWidget.h>
 #include <sawRobotIO1394/mtsRobotIO1394.h>
 #include <sawRobotIO1394/mtsRobotIO1394QtWidgetFactory.h>
-#include <sawIntuitiveResearchKit/mtsIntuitiveResearchKitPSM.h>
+#include <sawIntuitiveResearchKit/mtsIntuitiveResearchKitConsole.h>
+#include <sawIntuitiveResearchKit/mtsIntuitiveResearchKitConsoleQtWidget.h>
 #include <sawIntuitiveResearchKit/mtsIntuitiveResearchKitArmQtWidget.h>
 
 #include <cisst_ros_bridge/mtsROSBridge.h>
@@ -80,6 +81,14 @@ int main(int argc, char** argv)
   qtAppTask->Configure();
   componentManager->AddComponent(qtAppTask);
 
+  // console
+  mtsIntuitiveResearchKitConsole * console = new mtsIntuitiveResearchKitConsole("console");
+  componentManager->AddComponent(console);
+  mtsIntuitiveResearchKitConsoleQtWidget * consoleGUI = new mtsIntuitiveResearchKitConsoleQtWidget("consoleGUI");
+  componentManager->AddComponent(consoleGUI);
+  // connect console GUI to console
+  componentManager->Connect("console", "Main", "consoleGUI", "Main");
+
   // IO
   mtsRobotIO1394 * io = new mtsRobotIO1394("io", 1.0 * cmn_ms, firewirePort);
   io->Configure(config_io);
@@ -105,20 +114,17 @@ int main(int argc, char** argv)
   componentManager->Connect(pidMasterGUI->GetName(), "Controller", pid->GetName(), "Controller");
 
   // psm
-  mtsIntuitiveResearchKitPSM* psm = new mtsIntuitiveResearchKitPSM(config_name, 5 * cmn_ms);
-  psm->Configure(config_kinematics);
-  componentManager->AddComponent(psm);
-  componentManager->Connect(psm->GetName(), "PID", pid->GetName(), "Controller");
-  componentManager->Connect(psm->GetName(), "RobotIO", "io", config_name);
-  componentManager->Connect(psm->GetName(), "Adapter", "io", psm->GetName() + "-Adapter");
-  componentManager->Connect(psm->GetName(), "Tool", "io", psm->GetName() + "-Tool");
-  componentManager->Connect(psm->GetName(), "ManipClutch", "io", psm->GetName() + "-ManipClutch");
-  componentManager->Connect(psm->GetName(), "SUJClutch", "io", psm->GetName() + "-SUJClutch");
+  mtsIntuitiveResearchKitConsole::Arm *psm = new mtsIntuitiveResearchKitConsole::Arm(config_name, io->GetName());
+  psm->ConfigurePID(config_pid);
+  psm->ConfigureArm(mtsIntuitiveResearchKitConsole::Arm::ARM_PSM,config_kinematics, 5 * cmn_ms);
+  console->AddArm(psm);
+  console->Connect();
 
   // psm GUI
   mtsIntuitiveResearchKitArmQtWidget* psmGUI = new mtsIntuitiveResearchKitArmQtWidget(config_name+"GUI");
+  psmGUI->Configure();
   componentManager->AddComponent(psmGUI);
-  componentManager->Connect(psmGUI->GetName(), "Manipulator", psm->GetName(), "Robot");
+  componentManager->Connect(psmGUI->GetName(), "Manipulator", psm->Name(), "Robot");
 
 
   //-------------------------------------------------------
@@ -156,7 +162,7 @@ int main(int argc, char** argv)
         config_name, "SetPositionCartesian", "/dvrk_psm/set_position_cartesian");
 
   componentManager->AddComponent(&robotBridge);
-  componentManager->Connect(robotBridge.GetName(), config_name, psm->GetName(), "Robot");
+  componentManager->Connect(robotBridge.GetName(), config_name, psm->Name(), "Robot");
   componentManager->Connect(robotBridge.GetName(), pid->GetName(), pid->GetName(),"Controller");
   componentManager->Connect(robotBridge.GetName(), "ManipClutch", "io", config_name + "-ManipClutch");
 
@@ -177,10 +183,11 @@ int main(int argc, char** argv)
   {
     tabWidget->addTab(*iterator, (*iterator)->GetName().c_str());
   }
+  tabWidget->addTab(consoleGUI, "Main");
   // pid gui
   tabWidget->addTab(pidMasterGUI, (config_name + "PID").c_str());
   // psm gui
-  tabWidget->addTab(psmGUI, psm->GetName().c_str());
+  tabWidget->addTab(psmGUI, psm->Name().c_str());
   // button gui
   tabWidget->addTab(robotWidgetFactory->ButtonsWidget(), "Buttons");
   // show widget
@@ -206,6 +213,7 @@ int main(int argc, char** argv)
   delete pidMasterGUI;
   delete psm;
   delete psmGUI;
+  delete robotWidgetFactory;
 
   // stop all logs
   cmnLogger::Kill();

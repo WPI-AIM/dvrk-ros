@@ -141,7 +141,9 @@ int main(int argc, char ** argv)
 
     // console
     mtsIntuitiveResearchKitConsole * console = new mtsIntuitiveResearchKitConsole("console");
+    console->Configure(jsonMainConfigFile);
     componentManager->AddComponent(console);
+    console->Connect();
     mtsIntuitiveResearchKitConsoleQtWidget * consoleGUI = new mtsIntuitiveResearchKitConsoleQtWidget("consoleGUI");
     componentManager->AddComponent(consoleGUI);
     // connect consoleGUI to console
@@ -315,13 +317,19 @@ int main(int argc, char ** argv)
         tele->SetRegistrationRotation(master2slave);
         componentManager->AddComponent(tele);
         // connect teleGUI to tele
-        componentManager->Connect(teleGUI->GetName(), "TeleOperation", tele->GetName(), "Setting");
 
-        componentManager->Connect(tele->GetName(), "Master", mtm->Name(), "Robot");
-        componentManager->Connect(tele->GetName(), "Slave", psm->Name(), "Robot");
-        componentManager->Connect(tele->GetName(), "Clutch", "io", "CLUTCH");
-        componentManager->Connect(tele->GetName(), "OperatorPresent", operatorPresentComponent, operatorPresentInterface);
+//        componentManager->Connect(teleGUI->GetName(), "TeleOperation", tele->GetName(), "Setting");
+
+//        componentManager->Connect(tele->GetName(), "Master", mtm->Name(), "Robot");
+//        componentManager->Connect(tele->GetName(), "Slave", psm->Name(), "Robot");
+//        componentManager->Connect(tele->GetName(), "Clutch", "io", "CLUTCH");
+//        componentManager->Connect(tele->GetName(), "OperatorPresent", operatorPresentComponent, operatorPresentInterface);
     }
+    // add foot pedal interfaces
+    console->AddFootpedalInterfaces();
+
+    // connect all components from the console
+    console->Connect();
 
     // Starting ROS-Bridge Here
     mtsROSBridge rosBridge("RobotBridge", 20 * cmn_ms, true);

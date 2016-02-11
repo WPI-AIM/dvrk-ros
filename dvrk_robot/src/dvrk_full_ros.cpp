@@ -380,8 +380,8 @@ int main(int argc, char ** argv)
                 "MTMR", "SetWrench", "/dvrk_mtmr/set_wrench_static");
     rosBridge.AddSubscriberToWriteCommand<prmForceTorqueJointSet , sensor_msgs::JointState>(
                 "MTMR-PID", "SetTorqueJoint", "/dvrk_mtmr/set_joint_effort");
-    rosBridge.AddSubscriberToWriteCommand<vctBoolVec, std_msgs::Bool>(
-                "MTMR-PID", "EnableTorqueMode", "/dvrk_mtmr/enable_torque_mode");
+    //rosBridge.AddSubscriberToWriteCommand<vctBoolVec, std_msgs::Bool>(
+    //            "MTMR-PID", "EnableTorqueMode", "/dvrk_mtmr/enable_torque_mode");
 
     componentManager->AddComponent(&rosBridge);
     componentManager->Connect(rosBridge.GetName(), "MTML", "MTML", "Robot");

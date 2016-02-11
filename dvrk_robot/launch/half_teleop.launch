@@ -6,7 +6,7 @@
         pkg="dvrk_robot"
         type="dvrk_half_ros"
         args="-i $(find dvrk_robot)/config/sawRobotIO1394-MTMR-28687-foot-pedal.xml
-              -p $(find dvrk_robot)/config/sawControllersPID-MTM.xml
+              -p $(find dvrk_robot)/config/sawControllersPID-MTMR.xml
               -k $(find dvrk_robot)/config/dvmtm.rob
               -n MTMR
               -I $(find dvrk_robot)/config/sawRobotIO1394-PSM1-27116.xml

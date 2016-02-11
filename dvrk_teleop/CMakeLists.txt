@@ -67,7 +67,12 @@ cisst_target_link_libraries (dvrk_teleop ${REQUIRED_CISST_LIBRARIES})
 
 
 # dvrk_teleop_gui
-qt4_wrap_cpp (QT_WRAPPED_CPP include/dvrk_teleop/dvrkTeleopQWidget.h)
+if (CISST_HAS_QT4)
+  qt4_wrap_cpp (QT_WRAPPED_CPP include/dvrk_teleop/dvrkTeleopQWidget.h)
+else ()
+  set (CMAKE_AUTOMOC ON)
+endif ()
+
 add_executable(dvrk_teleop_gui
   include/dvrk_teleop/dvrkTeleopQWidget.h
   src/dvrkTeleopQWidget.cpp
@@ -76,3 +81,6 @@ add_executable(dvrk_teleop_gui
 target_link_libraries (dvrk_teleop_gui ${catkin_LIBRARIES})
 cisst_target_link_libraries (dvrk_teleop_gui ${REQUIRED_CISST_LIBRARIES})
 
+if (CISST_HAS_QT5)
+  qt5_use_modules (dvrk_teleop_gui Core Widgets OpenGL)
+endif (CISST_HAS_QT5)

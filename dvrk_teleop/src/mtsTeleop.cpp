@@ -28,13 +28,16 @@ mtsTeleop::mtsTeleop(const std::string &name, const double &period):
                                   &mtsTeleop::master_pose_cb, this);
     sub_psm_pose_ = nh_.subscribe("/dvrk_psm/cartesian_pose_current", 1,
                                   &mtsTeleop::slave_pose_cb, this);
-    sub_foodpedal_clutch_ = nh_.subscribe("/dvrk_footpedal/clutch_state", 1,
+    sub_footpedal_clutch_ = nh_.subscribe("/dvrk_footpedal/clutch_state", 1,
                                           &mtsTeleop::footpedal_clutch_cb, this);
+    sub_footpedal_coag_ = nh_.subscribe("/dvrk_footpedal/coag_state", 1,
+                                          &mtsTeleop::footpedal_coag_cb, this);
 
 
     // publisher
     pub_mtm_pose_ = nh_.advertise<geometry_msgs::Pose>("/dvrk_mtm/cartesian_pose_command", 1);
     pub_psm_pose_ = nh_.advertise<geometry_msgs::Pose>("/dvrk_psm/cartesian_pose_command", 1);
+    pub_psm_control_mode_ = nh_.advertise<std_msgs::Int8>("/dvrk_psm/control_mode",100);
 }
 
 void mtsTeleop::Configure(const std::string &)
@@ -65,9 +68,14 @@ void mtsTeleop::Run(void)
 #endif
 
     vctMatRot3 mtm2psm;
-    mtm2psm.Assign(-1.0, 0.0, 0.0,
-                   0.0,-1.0, 0.0,
-                   0.0, 0.0, 1.0);
+    mtm2psm.Assign(1.0, 0.0, 0.0,
+                   0.0, 0.0, 1.0,
+                   0.0, -1.0, 0.0);
+
+    vctMatRot3 psm6tomtm7;
+    psm6tomtm7.Assign(1.0, 0.0, 0.0,
+                      0.0, 0.0, -1.0,
+                      0.0, 1.0, 0.0);
 
     if (is_enabled_) {
 
@@ -83,7 +91,8 @@ void mtsTeleop::Run(void)
 
         // rotation
         vctMatRot3 psm_motion_rot;
-        psm_motion_rot = mtm2psm * mtm_pose_cur_.Rotation();
+        //psm_motion_rot = mtm2psm * mtm_pose_cur_.Rotation() * psm6tomtm7;
+        psm_motion_rot = mtm2psm* mtm_pose_cur_.Rotation() * psm6tomtm7;
         psm_pose_cmd_.Rotation().FromNormalized(psm_motion_rot);
 
 //        std::cerr << " teleop enabled " << counter_ << std::endl;
@@ -97,7 +106,8 @@ void mtsTeleop::Run(void)
         // mtm needs to follow psm orientation
         mtm_pose_cmd_.Assign(mtm_pose_cur_);
         vctMatRot3 mtm_rot_cmd;
-        mtm_rot_cmd = mtm2psm.Inverse() * psm_pose_cur_.Rotation();
+        //mtm_rot_cmd = mtm2psm.Inverse() * psm_pose_cur_.Rotation() * psm6tomtm7.Inverse();
+        mtm_rot_cmd = mtm2psm.Inverse() * psm_pose_cur_.Rotation() * psm6tomtm7.Inverse();
         mtm_pose_cmd_.Rotation().FromNormalized(mtm_rot_cmd);
     }
 
@@ -154,4 +164,17 @@ void mtsTeleop::footpedal_clutch_cb(const std_msgs::BoolConstPtr &msg)
     } else {
         is_clutch_pressed_ = true;
     }
+}
+
+void mtsTeleop::footpedal_coag_cb(const std_msgs::BoolConstPtr &msg)
+{
+   is_enabled_ = msg->data;
+   if(msg->data == true){
+       msg_psm_mode_.data = PSM::MODE_TELEOP;
+       pub_psm_control_mode_.publish(msg_psm_mode_);
+   }
+   else{
+       msg_psm_mode_.data = PSM::MODE_HOLD;
+       pub_psm_control_mode_.publish(msg_psm_mode_);
+   }
 }

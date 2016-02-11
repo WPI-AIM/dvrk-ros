@@ -140,8 +140,7 @@ int main(int argc, char** argv)
         // --------- Compute current pose & publish ----------
         // psm forward kinematics
         psm_pose_current = psm_manip.ForwardKinematics(psm_joint_current);
-        psm_pose_current = psm_pose_current * frame6to7;
-        psm_pose_current.Rotation().NormalizedSelf();
+        psm_pose_current = psm_pose_current;
         mtsCISSTToROS(psm_pose_current, msg_pose);
 
         // publish current pose
@@ -179,7 +178,7 @@ int main(int argc, char** argv)
             break;
         case PSM::MODE_TELEOP:
             // psm_pose_command updated in callback!
-            pose6 = psm_pose_command * frame6to7.Inverse();
+            pose6 = psm_pose_command;
             psm_manip.InverseKinematics(psm_joint_command, pose6);
 
             // joint 4 is a special case

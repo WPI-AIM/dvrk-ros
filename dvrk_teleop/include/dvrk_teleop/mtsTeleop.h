@@ -7,6 +7,8 @@
 #include <ros/package.h>
 #include <geometry_msgs/Pose.h>
 #include <std_msgs/Bool.h>
+#include <dvrk_kinematics/psm_logic.h>
+#include <std_msgs/Int8.h>
 
 // set up joint state variables
 class mtsTeleop: public mtsTaskPeriodic
@@ -28,6 +30,7 @@ protected:
     void master_pose_cb(const geometry_msgs::PoseConstPtr &msg);
     void slave_pose_cb(const geometry_msgs::PoseConstPtr &msg);
     void footpedal_clutch_cb(const std_msgs::BoolConstPtr &msg);
+    void footpedal_coag_cb(const std_msgs::BoolConstPtr &msg);
 
     bool has_clutch_;
     bool is_clutch_pressed_;
@@ -45,6 +48,7 @@ protected:
     vctFrm4x4 mtm_pose_cmd_;
     geometry_msgs::Pose msg_psm_pose_;
     geometry_msgs::Pose msg_mtm_pose_;
+    std_msgs::Int8 msg_psm_mode_;
 
     // ros variables
     ros::NodeHandle nh_;
@@ -53,10 +57,12 @@ protected:
     ros::Subscriber sub_teleop_enable_;
     ros::Subscriber sub_mtm_pose_;
     ros::Subscriber sub_psm_pose_;
-    ros::Subscriber sub_foodpedal_clutch_;
+    ros::Subscriber sub_footpedal_clutch_;
+    ros::Subscriber sub_footpedal_coag_;
 
     ros::Publisher pub_psm_pose_;
     ros::Publisher pub_mtm_pose_;
+    ros::Publisher pub_psm_control_mode_;
 };
 
 CMN_DECLARE_SERVICES_INSTANTIATION(mtsTeleop);

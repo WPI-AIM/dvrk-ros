@@ -4,6 +4,10 @@
 #include "dvrk_kinematics/mtm_logic.h"
 #include "dvrk_kinematics/psm_logic.h"
 
+#include <QVBoxLayout>
+#include <QButtonGroup>
+#include <QApplication>
+
 // set up joint state variables
 
 dvrkTeleopQWidget::dvrkTeleopQWidget(const std::string &name, const double &period):

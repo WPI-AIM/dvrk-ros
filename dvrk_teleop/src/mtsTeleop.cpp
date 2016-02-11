@@ -68,9 +68,14 @@ void mtsTeleop::Run(void)
 #endif
 
     vctMatRot3 mtm2psm;
-    mtm2psm.Assign(1.0, 0.0, 0.0,
-                   0.0, 0.0, 1.0,
-                   0.0, -1.0, 0.0);
+    mtm2psm.Assign(-1.0, 0.0, 0.0,
+                   0.0, -1.0, 0.0,
+                   0.0, 0.0, 1.0);
+
+    vctMatRot3 mtm02psm0;
+    mtm02psm0.Assign(1.0, 0.0, 0.0,
+                     0.0, 0.0, 1.0,
+                     0.0, -1.0, 0.0);
 
     vctMatRot3 psm6tomtm7;
     psm6tomtm7.Assign(1.0, 0.0, 0.0,
@@ -92,7 +97,7 @@ void mtsTeleop::Run(void)
         // rotation
         vctMatRot3 psm_motion_rot;
         //psm_motion_rot = mtm2psm * mtm_pose_cur_.Rotation() * psm6tomtm7;
-        psm_motion_rot = mtm2psm* mtm_pose_cur_.Rotation() * psm6tomtm7;
+        psm_motion_rot = mtm02psm0* mtm_pose_cur_.Rotation() * psm6tomtm7;
         psm_pose_cmd_.Rotation().FromNormalized(psm_motion_rot);
 
 //        std::cerr << " teleop enabled " << counter_ << std::endl;
@@ -106,8 +111,7 @@ void mtsTeleop::Run(void)
         // mtm needs to follow psm orientation
         mtm_pose_cmd_.Assign(mtm_pose_cur_);
         vctMatRot3 mtm_rot_cmd;
-        //mtm_rot_cmd = mtm2psm.Inverse() * psm_pose_cur_.Rotation() * psm6tomtm7.Inverse();
-        mtm_rot_cmd = mtm2psm.Inverse() * psm_pose_cur_.Rotation() * psm6tomtm7.Inverse();
+        mtm_rot_cmd = mtm02psm0.Inverse() * psm_pose_cur_.Rotation() * psm6tomtm7.Inverse();
         mtm_pose_cmd_.Rotation().FromNormalized(mtm_rot_cmd);
     }
 

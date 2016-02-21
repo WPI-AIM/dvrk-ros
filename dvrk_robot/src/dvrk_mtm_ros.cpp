@@ -160,7 +160,7 @@ int main(int argc, char** argv)
   robotBridge.AddSubscriberToWriteCommand<prmPositionCartesianSet, geometry_msgs::Pose>(
         config_name, "SetPositionCartesian", "/dvrk_mtm/set_position_cartesian");
   robotBridge.AddSubscriberToWriteCommand<prmForceCartesianSet, geometry_msgs::Wrench>(
-        config_name, "SetWrench", "/dvrk_mtm/set_wrench_static");
+        config_name, "SetWrenchBody", "/dvrk_mtm/set_wrench_body");
   //robotBridge.AddSubscriberToWriteCommand<vctBoolVec, std_msgs::Bool>(
   //      pid->GetName(), "EnableTorqueMode", "/dvrk_mtm/enable_torque_mode");
 

@@ -161,6 +161,8 @@ int main(int argc, char** argv)
         config_name, "SetPositionCartesian", "/dvrk_mtm/set_position_cartesian");
   robotBridge.AddSubscriberToWriteCommand<prmForceCartesianSet, geometry_msgs::Wrench>(
         config_name, "SetWrenchBody", "/dvrk_mtm/set_wrench_body");
+  robotBridge.AddSubscriberToWriteCommand<prmForceCartesianSet, geometry_msgs::Wrench>(
+        config_name, "SetWrenchSpatial", "/dvrk_mtm/set_wrench_spatial");
   //robotBridge.AddSubscriberToWriteCommand<vctBoolVec, std_msgs::Bool>(
   //      pid->GetName(), "EnableTorqueMode", "/dvrk_mtm/enable_torque_mode");
 

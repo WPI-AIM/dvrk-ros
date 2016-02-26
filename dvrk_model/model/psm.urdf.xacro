@@ -280,6 +280,11 @@
           <mesh filename="package://dvrk_model/meshes/psm/tool_wrist_sca_link_2.dae"/>
         </geometry>
       </visual>
+     <collision>
+       <geometry>
+         <mesh filename="package://dvrk_model/meshes/psm/sphere_20mm.dae"/>
+       </geometry>
+     </collision>
     </link>
   </xacro:macro>
   

@@ -257,6 +257,7 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
+          <!--mesh filename="package://dvrk_model/meshes/psm/needle.dae"/-->
           <mesh filename="package://dvrk_model/meshes/psm/tool_wrist_sca_link_2.dae"/>
         </geometry>
       </visual>
@@ -277,13 +278,14 @@
       <visual>
         <origin rpy="0 3.1516 0" xyz="0 0 0"/>
         <geometry>
+	  <!--mesh filename="package://dvrk_model/meshes/psm/needle.stl"/-->
           <mesh filename="package://dvrk_model/meshes/psm/sphere_50mm.dae"/>
           <!--mesh filename="package://dvrk_model/meshes/psm/tool_wrist_sca_link_2.dae"/-->
         </geometry>
       </visual>
      <!--collision>
        <geometry>
-         <mesh filename="package://dvrk_model/meshes/psm/sphere_50mm.dae"/>
+         <mesh filename="package://dvrk_model/meshes/psm/needle.dae"/>
        </geometry>
      </collision-->
     </link>
